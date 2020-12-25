@@ -1,8 +1,7 @@
 import './StarSystem.scss';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Canvas } from '../components';
 import { clientHeight, clientWidth } from '../utils/canvas';
-import { drawCircle } from '../utils/shapes';
 import { Star, Planet } from '../entities';
 
 const StarSystem: React.FC = () => {

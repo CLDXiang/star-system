@@ -1,4 +1,5 @@
 import { drawCircle } from '../utils/shapes';
+import { BASIC_ANGULAR_VELOCITY } from '../utils/config';
 
 interface PlanetConstructor {
   orbitRadius: number;
@@ -13,6 +14,11 @@ export default class Planet {
     this.radius = radius;
     this.angle = angle;
     this.color = color;
+    this.velocity = BASIC_ANGULAR_VELOCITY * orbitRadius ** -1.5; // Kepler's third law of planetary motion
+
+    setInterval(() => {
+      this.move(this.velocity / 30); // 30 FPS
+    }, 33);
   }
 
   /** 0 ~ 100 */
@@ -24,7 +30,14 @@ export default class Planet {
   /** 0 ~ 2 * Math.PI */
   private angle: number;
 
+  /** angular velocity */
+  private velocity: number;
+
   private color: string;
+
+  private move(angle: number) {
+    this.angle += angle;
+  }
 
   draw(ctx: CanvasRenderingContext2D): void {
     drawCircle(ctx, 0, 0, this.orbitRadius, '#fff', true);
