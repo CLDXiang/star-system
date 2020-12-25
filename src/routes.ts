@@ -1,5 +1,5 @@
 const routes = {
-  Home: '/',
+  StarSystem: '/',
 };
 
 export default routes;

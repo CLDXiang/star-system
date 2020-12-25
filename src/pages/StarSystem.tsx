@@ -1,11 +1,11 @@
-import './Home.scss';
+import './StarSystem.scss';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Canvas } from '../components';
 import { clientHeight, clientWidth } from '../utils/canvas';
 import { drawCircle } from '../utils/shapes';
 import { Star, Planet } from '../entities';
 
-const Home: React.FC = () => {
+const StarSystem: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starRef = useRef(
     new Star({
@@ -65,4 +65,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default StarSystem;
