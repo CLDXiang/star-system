@@ -3,8 +3,8 @@ export const clientWidth = (): number => document.body.clientWidth;
 export const clientHeight = (): number => document.body.clientHeight;
 
 /** Map position percentage from left top to canvas coordinate
- * @param leftPercentage 0-100
- * @param topPercentage 0-100
+ * @param leftPercentage 0 ~ 100
+ * @param topPercentage 0 ~ 100
  * @return [xPixels, yPixels]
  */
 export const coordinateLeftTop = (
@@ -16,8 +16,8 @@ export const coordinateLeftTop = (
 ];
 
 /** Map position percentage from center to canvas coordinate
- * @param xPercentage -100-100, from left to right
- * @param yPercentage -100-100, from bottom to top
+ * @param xPercentage -100 ~ 100, from left to right
+ * @param yPercentage -100 ~ 100, from bottom to top
  * @return [xPixels, yPixels]
  */
 export const coordinateCenter = (
@@ -29,8 +29,8 @@ export const coordinateCenter = (
 ];
 
 /** Map position percentage from center to canvas coordinate in a square area
- * @param xPercentage -100-100, from left to right
- * @param yPercentage -100-100, from bottom to top
+ * @param xPercentage -100 ~ 100, from left to right
+ * @param yPercentage -100 ~ 100, from bottom to top
  * @return [xPixels, yPixels]
  */
 export const coordinateCenterNormal = (
@@ -52,7 +52,7 @@ export const coordinateCenterNormal = (
 };
 
 /** Map percentage to canvas length
- * @param percentage 0-100
+ * @param percentage 0 ~ 100
  * @return length
  */
 export const length = (percentage: number): number =>
