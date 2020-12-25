@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useState } from 'react';
-import './Canvas.scss';
 
 const Canvas = forwardRef<HTMLCanvasElement>((_, ref) => {
   const [height, setHeight] = useState<number>(document.body.clientHeight);
