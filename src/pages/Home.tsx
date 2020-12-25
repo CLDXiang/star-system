@@ -2,6 +2,7 @@ import './Home.scss';
 import { useCallback, useEffect, useRef } from 'react';
 import { Canvas } from '../components';
 import { clientHeight, clientWidth } from '../utils/canvas';
+import { drawCircle } from '../utils/shapes';
 
 const Home: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -14,6 +15,9 @@ const Home: React.FC = () => {
     // clear screen
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, clientWidth(), clientHeight());
+
+    drawCircle(ctx, 0, 0, 10, 'orange');
+
     requestAnimationFrame(draw);
   }, []);
 

@@ -50,3 +50,10 @@ export const coordinateCenterNormal = (
     (clientHeight() * (100 - yPercentage)) / 200,
   ];
 };
+
+/** Map percentage to canvas length
+ * @param percentage 0-100
+ * @return length
+ */
+export const length = (percentage: number): number =>
+  (Math.min(clientHeight(), clientWidth()) * percentage) / 100;
