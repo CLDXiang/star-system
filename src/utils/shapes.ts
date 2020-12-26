@@ -11,6 +11,7 @@ export const drawCircle = (
     patternImg?: HTMLImageElement;
     patternRotation?: number;
     patternPosition?: number;
+    shadow?: number;
   },
 ): void => {
   ctx.save();
@@ -49,13 +50,10 @@ export const drawCircle = (
     }
   }
 
+  const [xCenter, yCenter] = coordinateCenterNormal(xPercentage, yPercentage);
+
   ctx.beginPath();
-  ctx.arc(
-    ...coordinateCenterNormal(xPercentage, yPercentage),
-    length(radiusPercentage),
-    0,
-    2 * Math.PI,
-  );
+  ctx.arc(xCenter, yCenter, length(radiusPercentage), 0, 2 * Math.PI);
   if (style?.stroke) {
     ctx.stroke();
   } else if (
@@ -83,6 +81,25 @@ export const drawCircle = (
     ctx.restore();
   } else {
     ctx.fill();
+  }
+
+  if (style?.shadow) {
+    ctx.save();
+
+    const shadowGrad = ctx.createRadialGradient(
+      ...coordinateCenterNormal(0, 0),
+      length(style?.shadow) - length(radiusPercentage * 2),
+      ...coordinateCenterNormal(0, 0),
+      length(style?.shadow) + length(radiusPercentage * 2),
+    );
+    shadowGrad.addColorStop(0, '#0000');
+    shadowGrad.addColorStop(0.1, '#0000');
+    shadowGrad.addColorStop(0.6, '#000d');
+    shadowGrad.addColorStop(1, '#000f');
+
+    ctx.fillStyle = shadowGrad;
+    ctx.fill();
+    ctx.restore();
   }
 
   ctx.restore();

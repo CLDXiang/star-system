@@ -70,6 +70,7 @@ export default class Planet extends CelestialBody {
         patternImg: this.patternImg ?? undefined,
         patternPosition: this.rotationAngle,
         patternRotation: this.rotationDirection,
+        shadow: this.orbitRadius,
       },
     );
   }
