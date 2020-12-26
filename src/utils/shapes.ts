@@ -95,7 +95,7 @@ export const drawCircle = (
     shadowGrad.addColorStop(0, '#0000');
     shadowGrad.addColorStop(0.1, '#0000');
     shadowGrad.addColorStop(0.6, '#000d');
-    shadowGrad.addColorStop(1, '#000f');
+    shadowGrad.addColorStop(1, '#000e');
 
     ctx.fillStyle = shadowGrad;
     ctx.fill();
