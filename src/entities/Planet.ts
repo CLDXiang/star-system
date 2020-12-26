@@ -101,13 +101,12 @@ export default class Planet {
       this.orbitRadius * 2 * Math.cos(this.revolutionAngle),
       this.orbitRadius * 2 * Math.sin(this.revolutionAngle),
       this.radius,
-      this.patternImg
-        ? {
-            patternImg: this.patternImg,
-            patternPosition: this.rotationAngle,
-            patternRotation: this.rotationDirection,
-          }
-        : { color: this.color },
+      {
+        color: this.color,
+        patternImg: this.patternImg ?? undefined,
+        patternPosition: this.rotationAngle,
+        patternRotation: this.rotationDirection,
+      },
     );
   }
 }

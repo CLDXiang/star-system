@@ -73,18 +73,11 @@ export default class Star {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    drawCircle(
-      ctx,
-      0,
-      0,
-      this.radius,
-      this.patternImg
-        ? {
-            patternImg: this.patternImg,
-            patternPosition: this.rotationAngle,
-            patternRotation: this.rotationDirection,
-          }
-        : { color: this.color },
-    );
+    drawCircle(ctx, 0, 0, this.radius, {
+      color: this.color,
+      patternImg: this.patternImg ?? undefined,
+      patternPosition: this.rotationAngle,
+      patternRotation: this.rotationDirection,
+    });
   }
 }

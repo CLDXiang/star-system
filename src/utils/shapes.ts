@@ -21,7 +21,8 @@ export const drawCircle = (
     } else {
       ctx.fillStyle = style.color;
     }
-  } else if (style?.patternImg) {
+  }
+  if (style?.patternImg && style.patternImg.width && style.patternImg.height) {
     // https://stackoverflow.com/questions/13960564/resize-an-imagewith-javascript-for-use-inside-a-canvas-createpattern
     const patternCanvas = document.createElement('canvas');
     const pCtx = patternCanvas.getContext('2d');
@@ -57,7 +58,11 @@ export const drawCircle = (
   );
   if (style?.stroke) {
     ctx.stroke();
-  } else if (style?.patternImg) {
+  } else if (
+    style?.patternImg &&
+    style.patternImg.width &&
+    style.patternImg.height
+  ) {
     // https://stackoverflow.com/questions/7698949/moving-the-start-position-of-canvas-pattern
     ctx.save();
     const radius = radiusPercentage * 2;
