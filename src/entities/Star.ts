@@ -1,11 +1,10 @@
-import { length } from '../utils/canvas';
 import { drawCircle } from '../utils/shapes';
 
 interface StarConstructor {
   radius: number;
-  rotationDirection: number;
+  rotationDirection?: number;
   rotationAngle?: number;
-  rotationVelocity: number;
+  rotationVelocity: [number, number];
   color: string;
   patternSrc?: string;
 }
@@ -14,16 +13,16 @@ interface StarConstructor {
 export default class Star {
   constructor({
     radius,
-    rotationDirection,
+    rotationDirection = 0,
     rotationAngle = 0,
     rotationVelocity,
     color,
     patternSrc,
   }: StarConstructor) {
+    this.radius = radius;
     this.rotationDirection = rotationDirection;
     this.rotationAngle = rotationAngle;
     this.rotationVelocity = rotationVelocity;
-    this.radius = radius;
     this.color = color;
     if (patternSrc) {
       this.patternImg = new Image();
@@ -31,7 +30,10 @@ export default class Star {
 
       // self rotation
       setInterval(() => {
-        this.rotate(this.rotationVelocity / 30); // 30 FPS
+        this.rotate(
+          this.rotationVelocity[0] / 30,
+          this.rotationVelocity[1] / 30,
+        ); // 30 FPS
       }, 33);
     }
   }
@@ -45,21 +47,28 @@ export default class Star {
   /** current rotation angle: pixels in the texture image indeed */
   private rotationAngle: number;
 
-  /** how many pixels */
-  private rotationVelocity: number;
+  /** of [rotationAngle, rotationDirection] */
+  private rotationVelocity: [number, number];
 
   private color: string;
 
   private patternImg: HTMLImageElement | null = null;
 
-  private rotate(angle: number) {
+  private rotate(
+    rotationAngleIncrement: number,
+    rotationDirectionIncrement: number,
+  ) {
     if (!this.patternImg) {
       return;
     }
-    this.rotationAngle += angle;
+    this.rotationAngle += rotationAngleIncrement;
+    this.rotationDirection += rotationDirectionIncrement;
     // FIXME: better be the width of pattern
     if (this.rotationAngle >= Number.MAX_SAFE_INTEGER / 2) {
       this.rotationAngle -= Number.MAX_SAFE_INTEGER / 2;
+    }
+    if (this.rotationDirection >= 2 * Math.PI) {
+      this.rotationDirection -= 2 * Math.PI;
     }
   }
 
