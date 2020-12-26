@@ -56,7 +56,7 @@ export default class Planet extends CelestialBody {
 
   draw(ctx: CanvasRenderingContext2D): void {
     drawCircle(ctx, 0, 0, this.orbitRadius, {
-      color: '#fff',
+      color: '#fff1',
       stroke: true,
     });
 
