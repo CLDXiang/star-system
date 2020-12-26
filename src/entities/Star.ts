@@ -1,4 +1,5 @@
 import { drawCircle } from '../utils/shapes';
+import CelestialBody from './CelestialBody';
 
 interface StarConstructor {
   radius: number;
@@ -9,8 +10,7 @@ interface StarConstructor {
   patternSrc?: string;
 }
 
-// TODO: self rotation
-export default class Star {
+export default class Star extends CelestialBody {
   constructor({
     radius,
     rotationDirection = 0,
@@ -19,57 +19,14 @@ export default class Star {
     color,
     patternSrc,
   }: StarConstructor) {
-    this.radius = radius;
-    this.rotationDirection = rotationDirection;
-    this.rotationAngle = rotationAngle;
-    this.rotationVelocity = rotationVelocity;
-    this.color = color;
-    if (patternSrc) {
-      this.patternImg = new Image();
-      this.patternImg.src = patternSrc;
-
-      // self rotation
-      setInterval(() => {
-        this.rotate(
-          this.rotationVelocity[0] / 30,
-          this.rotationVelocity[1] / 30,
-        ); // 30 FPS
-      }, 33);
-    }
-  }
-
-  /** 0 ~ 100 */
-  private radius: number;
-
-  /** self rotation direction: rotation angle of texture */
-  private rotationDirection: number;
-
-  /** current rotation angle: pixels in the texture image indeed */
-  private rotationAngle: number;
-
-  /** of [rotationAngle, rotationDirection] */
-  private rotationVelocity: [number, number];
-
-  private color: string;
-
-  private patternImg: HTMLImageElement | null = null;
-
-  private rotate(
-    rotationAngleIncrement: number,
-    rotationDirectionIncrement: number,
-  ) {
-    if (!this.patternImg) {
-      return;
-    }
-    this.rotationAngle += rotationAngleIncrement;
-    this.rotationDirection += rotationDirectionIncrement;
-    // FIXME: better be the width of pattern
-    if (this.rotationAngle >= Number.MAX_SAFE_INTEGER / 2) {
-      this.rotationAngle -= Number.MAX_SAFE_INTEGER / 2;
-    }
-    if (this.rotationDirection >= 2 * Math.PI) {
-      this.rotationDirection -= 2 * Math.PI;
-    }
+    super({
+      radius,
+      rotationDirection,
+      rotationAngle,
+      rotationVelocity,
+      color,
+      patternSrc,
+    });
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
