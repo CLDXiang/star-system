@@ -4,7 +4,7 @@ import { BASIC_ANGULAR_VELOCITY } from '../utils/config';
 interface PlanetConstructor {
   orbitRadius: number;
   radius: number;
-  angle: number;
+  revolutionAngle: number;
   color: string;
   patternSrc?: string;
 }
@@ -14,22 +14,22 @@ export default class Planet {
   constructor({
     orbitRadius,
     radius,
-    angle,
+    revolutionAngle,
     color,
     patternSrc,
   }: PlanetConstructor) {
     this.orbitRadius = orbitRadius;
     this.radius = radius;
-    this.angle = angle;
+    this.revolutionAngle = revolutionAngle;
     this.color = color;
-    this.velocity = BASIC_ANGULAR_VELOCITY * orbitRadius ** -1.5; // Kepler's third law of planetary motion
+    this.revolutionVelocity = BASIC_ANGULAR_VELOCITY * orbitRadius ** -1.5; // Kepler's third law of planetary motion
     if (patternSrc) {
       this.patternImg = new Image();
       this.patternImg.src = patternSrc;
     }
 
     setInterval(() => {
-      this.move(this.velocity / 30); // 30 FPS
+      this.move(this.revolutionVelocity / 30); // 30 FPS
     }, 33);
   }
 
@@ -40,17 +40,17 @@ export default class Planet {
   private radius: number;
 
   /** 0 ~ 2 * Math.PI */
-  private angle: number;
+  private revolutionAngle: number;
 
-  /** angular velocity */
-  private velocity: number;
+  /** revolution angular velocity */
+  private revolutionVelocity: number;
 
   private color: string;
 
   private patternImg: HTMLImageElement | null = null;
 
   private move(angle: number) {
-    this.angle += angle;
+    this.revolutionAngle += angle;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -61,8 +61,8 @@ export default class Planet {
 
     drawCircle(
       ctx,
-      this.orbitRadius * 2 * Math.cos(this.angle),
-      this.orbitRadius * 2 * Math.sin(this.angle),
+      this.orbitRadius * 2 * Math.cos(this.revolutionAngle),
+      this.orbitRadius * 2 * Math.sin(this.revolutionAngle),
       this.radius,
       this.patternImg ? { patternImg: this.patternImg } : { color: this.color },
     );

@@ -9,6 +9,8 @@ export const drawCircle = (
     color?: string;
     stroke?: boolean;
     patternImg?: HTMLImageElement;
+    patternRotation?: number;
+    patternPosition?: number;
   },
 ): void => {
   ctx.save();
@@ -25,7 +27,8 @@ export const drawCircle = (
     const pCtx = patternCanvas.getContext('2d');
     if (pCtx) {
       const size = length(radiusPercentage * 2);
-      patternCanvas.width = size;
+      patternCanvas.width =
+        (size * style.patternImg.width) / style.patternImg.height;
       patternCanvas.height = size;
       pCtx.drawImage(
         style.patternImg,
@@ -35,8 +38,8 @@ export const drawCircle = (
         style.patternImg.height,
         0,
         0,
-        size,
-        size,
+        patternCanvas.width,
+        patternCanvas.height,
       );
       const pattern = ctx.createPattern(patternCanvas, 'repeat-x');
       if (pattern) {
@@ -57,11 +60,20 @@ export const drawCircle = (
   } else if (style?.patternImg) {
     // https://stackoverflow.com/questions/7698949/moving-the-start-position-of-canvas-pattern
     ctx.save();
-    const [xCenter, yCenter] = coordinateCenterNormal(
-      xPercentage - radiusPercentage * 2,
-      yPercentage + radiusPercentage * 2,
+    const radius = radiusPercentage * 2;
+    const pos = style?.patternPosition ?? 0;
+    const rotation = style?.patternRotation ?? 0;
+    const rotationRadius = (radius ** 2 + (pos + radius) ** 2) ** 0.5;
+    const refAngle = Math.atan((radius + pos) / radius) - rotation;
+
+    const [xOffset, yOffset] = coordinateCenterNormal(
+      xPercentage - rotationRadius * Math.sin(refAngle),
+      yPercentage + rotationRadius * Math.cos(refAngle),
     );
-    ctx.translate(xCenter, yCenter);
+    ctx.translate(xOffset, yOffset);
+    if (style?.patternRotation) {
+      ctx.rotate(style.patternRotation);
+    }
     ctx.fill();
     ctx.restore();
   } else {
